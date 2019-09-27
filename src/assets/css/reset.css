@@ -1,0 +1,96 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    }
+    *:before,
+    *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    }
+    body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+    }
+    html{
+        width: 100%;
+        height: 100%;
+    }
+    body {
+    background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1570073569&di=5f9ad06f3f3e8e5a2211654e1fcef8e8&imgtype=jpg&er=1&src=http%3A%2F%2Fimg-download.pchome.net%2Fdownload%2F1k1%2F6b%2F4h%2Fohuxp1-23wf.jpg) no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    color: #666;
+    font-size: 14px;
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    }
+    td, th, caption {
+    font-size: 14px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: 100%;
+    }
+    address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+    }
+    a {
+    color: #fff;
+    text-decoration: none;
+    }
+    a:hover {
+        color: red;
+    }
+    img {
+    border: none;
+    vertical-align: middle;
+    width: 100%;
+    }
+    ol, ul, li {
+    list-style: none;
+    }
+    input, textarea, select, button {
+    font: 14px "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    }
+    table {
+    border-collapse: collapse;
+    }
+
+    .clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;y:none;
+    line-height: 0;
+    height: 0;
+    font-size:0;
+    }
+    .clearfix { *zoom:1;}
+    /*公共类*/
+    .fl {
+    float: left
+    }
+    .fr {
+    float: right
+    }
+    .al {
+    text-align: left
+    }
+    .ac {
+    text-align: center
+    }
+    .ar {
+    text-align: right
+    }
+    .hide {
+    display: none
+    }
+    .pc {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%)
+    }
