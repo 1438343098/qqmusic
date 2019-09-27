@@ -7,11 +7,13 @@ import { load } from 'jinrishici'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+
 Vue.prototype.$load = load
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.axios = axios
 Vue.use(VueAxios, axios)
+
 
 new Vue({
   router,
