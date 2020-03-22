@@ -9,7 +9,7 @@
           <img src=" http://blog.mrabit.com/bing/today" class="fr">
         </div>
 
-        <div v-html="datas.content" />
+        <div class="text" v-html="datas.content" />
       </div>
     </div>
 
@@ -50,12 +50,17 @@ export default {
   top: 0;
   left: 0;
   padding: 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
   bottom: 50px;
   right: 0px;
 
 }
-
+.text{
+  text-indent: 40px;
+  &>p{
+    margin-top: 20px;
+  }
+}
 .footers{
   position: absolute;
   bottom: 15px;
