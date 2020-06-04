@@ -6,14 +6,15 @@
         <p style="font-weight:600;font-size:20px">{{ datas.title }}</p>
         <p>作者：{{ datas.author }}</p>
         <div class="img-box fr">
-          <img src=" http://blog.mrabit.com/bing/today" class="fr">
+          <img :src="imgUrl" class="fr" />
         </div>
-
         <div class="text" v-html="datas.content" />
       </div>
     </div>
 
-    <div class="footers"><router-link to="/tool">音乐欣赏</router-link></div>
+    <div class="footers">
+      <router-link to="/tool">音乐欣赏</router-link>
+    </div>
   </div>
 </template>
 
@@ -21,20 +22,26 @@
 export default {
   data() {
     return {
-      datas: []
-    }
+      datas: [],
+      imgUrl: ""
+    };
   },
 
   created() {
-    this.axios.get('https://interface.meiriyiwen.com/article/today?dev=1').then(res => {
-      this.datas = res.data.data
-    })
+    this.axios
+      .get("https://interface.meiriyiwen.com/article/random?dev=1")
+      .then(res => {
+        this.datas = res.data.data;
+      });
+    this.axios.get("/api/pcImg").then(res => {
+      this.imgUrl = "https://cn.bing.com" + res.data.images[0].url;
+    });
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
-.index{
+.index {
   text-align: left;
   color: #000;
   font-size: 18px;
@@ -42,10 +49,10 @@ export default {
   position: relative;
   height: 100%;
 }
-.img-box{
+.img-box {
   width: 280px;
 }
-.box{
+.box {
   position: absolute;
   top: 0;
   left: 0;
@@ -53,18 +60,17 @@ export default {
   overflow-y: auto;
   bottom: 50px;
   right: 0px;
-
 }
-.text{
+.text {
   text-indent: 40px;
-  &>p{
+  & > p {
     margin-top: 20px;
   }
 }
-.footers{
+.footers {
   position: absolute;
   bottom: 15px;
   left: 50%;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
 }
 </style>

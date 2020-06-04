@@ -33,15 +33,22 @@ export default {
 		Aside
 	},
 	mounted() {
-		this.axios.get('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=2&mkt=zh-CN').then(res => {
-			document.body.style.backgroundImage = 'url(https://cn.bing.com' + res.data.images[1].url + ')';
-			this.text = res.data.images[1].copyright;
-			this.path = res.data.images[1].copyrightlink;
-		});
+	
+		this.getPcImg()
 	}, 
 	methods: {
 		goPath() {
 			window.open(this.path, '_blank');
+		},
+		getPcImg(){
+			
+			this.axios
+			  .get("/api/pcImg")
+			  .then(res => {
+			    	document.body.style.backgroundImage = 'url(https://cn.bing.com' + res.data.images[1].url + ')';
+			    	this.text = res.data.images[1].copyright;
+			    	this.path = res.data.images[1].copyrightlink;
+			  });
 		}
 	}
 };

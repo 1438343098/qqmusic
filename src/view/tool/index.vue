@@ -2,15 +2,22 @@
   <div class="index">
     <div class="box">
       <div class="content">
-        <aplayer ref='music' v-if="JSON.stringify(musicList) != '{}' && isRouterAlive" autoplay :music="musicList" repeat="repeat-all" :showLrc="true" />
-        <div class="lists" v-for="(item,index) in musicLists" :key="index" @click="plays(item)">
+        <aplayer
+          v-if="JSON.stringify(musicList) != '{}' && isRouterAlive"
+          ref="music"
+          autoplay
+          :music="musicList"
+          repeat="repeat-all"
+          :show-lrc="true"
+        />
+        <div v-for="(item,index) in musicLists" :key="index" class="lists" @click="plays(item)">
           <div>
             <div class="imte-img">
-              <img :src="item.picUrl" />
+              <img :src="item.picUrl.replace(/http:\/\//, 'https://')" />
             </div>
-            <span>{{item.name}}</span>
+            <span>{{ item.name }}</span>
           </div>
-          <div>{{item.song.artists.map(item=>item.name).join(",")}}</div>
+          <div>{{ item.song.artists.map(item=>item.name).join(",") }}</div>
         </div>
       </div>
     </div>
@@ -31,17 +38,14 @@ export default {
       musicLists: [],
       musicList: {},
       item: {},
-      isRouterAlive:true
+      isRouterAlive: true
     };
   },
   created() {
-    this.axios
-      .get("/api/music/v1/personalized/newsong")
-      .then(res => {
-        this.musicLists = res.data.result;
-        this.plays(this.musicLists[0]);
-        
-      });
+    this.axios.get("/api/music/v1/personalized/newsong").then(res => {
+      this.musicLists = res.data.result;
+      this.plays(this.musicLists[0]);
+    });
   },
   methods: {
     initData1() {
@@ -54,39 +58,46 @@ export default {
     },
 
     initData2() {
-      return this.axios
-        .get("/api/music/v1/music/detail", {
-          params: {
-            id: this.item.id
-          }
-        })
+      return this.axios.get("/api/music/v1/music/detail", {
+        params: {
+          id: this.item.id
+        }
+      });
     },
     initData3() {
       // 歌词
-      return this.axios
-        .get("/api/music/v1/lyric", {
-          params: {
-            id: this.item.id
-          }
-        })
+      return this.axios.get("/api/music/v1/lyric", {
+        params: {
+          id: this.item.id
+        }
+      });
     },
     plays(item) {
-      this.item = Object.assign({},item)
-      
-      this.axios.all([this.initData1(), this.initData2(), this.initData3()]).then(
-        this.axios.spread((acct, acct2, acct3) => {
-          this.$set(this.musicList,'src',acct.data.data[0].url)
+      this.item = Object.assign({}, item);
 
-          this.$set(this.musicList,'title',acct2.data.songs[0].name)
-          this.$set(this.musicList,'artist',acct2.data.songs[0].ar.map(item => item.name).join(","))
-          this.$set(this.musicList,'pic',acct2.data.songs[0].al.picUrl)
- 
-          this.$set(this.musicList,'lrc',acct3.data.lrc.lyric)
-          this.isRouterAlive = false
-          this.$nextTick(() => (this.isRouterAlive = true))
-        })
-        
-      );
+      this.axios
+        .all([this.initData1(), this.initData2(), this.initData3()])
+        .then(
+          this.axios.spread((acct, acct2, acct3) => {
+            this.$set(
+              this.musicList,
+              "src",
+              acct.data.data[0].url.replace(/http:\/\//, "https://")
+            );
+
+            this.$set(this.musicList, "title", acct2.data.songs[0].name);
+            this.$set(
+              this.musicList,
+              "artist",
+              acct2.data.songs[0].ar.map(item => item.name).join(",")
+            );
+            this.$set(this.musicList, "pic", acct2.data.songs[0].al.picUrl);
+
+            this.$set(this.musicList, "lrc", acct3.data.lrc.lyric);
+            this.isRouterAlive = false;
+            this.$nextTick(() => (this.isRouterAlive = true));
+          })
+        );
     }
   }
 };
