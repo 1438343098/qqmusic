@@ -91,7 +91,7 @@ export default {
               "artist",
               acct2.data.songs[0].ar.map(item => item.name).join(",")
             );
-            this.$set(this.musicList, "pic", acct2.data.songs[0].al.picUrl);
+            this.$set(this.musicList, "pic", acct2.data.songs[0].al.picUrl.replace(/http:\/\//, 'https://'));
 
             this.$set(this.musicList, "lrc", acct3.data.lrc.lyric);
             this.isRouterAlive = false;

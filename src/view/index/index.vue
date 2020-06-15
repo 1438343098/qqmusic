@@ -1,20 +1,21 @@
 <template>
   <div class="index">
-    <div class="box">
+    <div class="box" ref='box'>
       <div class="content">
         <p style="font-weight:600;font-size:24px" class="ac">文章推荐</p>
         <p style="font-weight:600;font-size:20px">{{ datas.title }}</p>
         <p>作者：{{ datas.author }}</p>
-        <div class="img-box fr">
+        <div class="img-box fr" @click="goPath">
           <img :src="imgUrl" class="fr" />
         </div>
         <div class="text" v-html="datas.content" />
       </div>
     </div>
-
+	
     <div class="footers">
       <router-link to="/tool">音乐欣赏</router-link>
     </div>
+	<div class="addText" @click="getData">再来一文</div>
   </div>
 </template>
 
@@ -23,19 +24,30 @@ export default {
   data() {
     return {
       datas: [],
-      imgUrl: ""
+      imgUrl: "",
+	  path:''
     };
   },
 
   created() {
-    this.axios
-      .get("https://interface.meiriyiwen.com/article/random?dev=1")
-      .then(res => {
-        this.datas = res.data.data;
-      });
+    this.getData()
     this.axios.get("/api/pcImg").then(res => {
       this.imgUrl = "https://cn.bing.com" + res.data.images[0].url;
+	  this.path = res.data.images[1].copyrightlink;
     });
+  },
+  methods:{
+	  getData(){
+		  this.axios
+		    .get("https://interface.meiriyiwen.com/article/random?dev=1")
+		    .then(res => {
+		      this.datas = res.data.data;
+		    });
+			this.$refs.box.scrollTop = 0;
+	  },
+	  goPath() {
+	  	window.open(this.path, '_blank');
+	  },
   }
 };
 </script>
@@ -51,6 +63,7 @@ export default {
 }
 .img-box {
   width: 280px;
+  cursor: pointer;
 }
 .box {
   position: absolute;
@@ -72,5 +85,15 @@ export default {
   bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
+}
+.addText{
+	position: absolute;
+	bottom: 15px;
+	right: 10%;
+	color: #fff;
+	cursor: pointer;
+}
+.addText:hover{
+	color: orangered;
 }
 </style>
