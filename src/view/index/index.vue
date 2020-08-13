@@ -33,7 +33,7 @@ export default {
     this.getData()
     this.axios.get("/api/pcImg").then(res => {
       this.imgUrl = "https://cn.bing.com" + res.data.images[0].url;
-	  this.path = res.data.images[1].copyrightlink;
+	  this.path = res.data.images[0].copyrightlink;
     });
   },
   methods:{
@@ -43,7 +43,10 @@ export default {
 		    .then(res => {
 		      this.datas = res.data.data;
 		    });
-			this.$refs.box.scrollTop = 0;
+			this.$nextTick(()=>{
+				if(this.$refs.box) this.$refs.box.scrollTop = 0;
+			})
+			
 	  },
 	  goPath() {
 	  	window.open(this.path, '_blank');
