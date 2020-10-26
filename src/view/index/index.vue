@@ -23,7 +23,7 @@
 export default {
   data() {
     return {
-      datas: [],
+      datas: {},
       imgUrl: "",
 	  path:''
     };
@@ -38,10 +38,9 @@ export default {
   },
   methods:{
 	  getData(){
-		  this.axios
-		    .get("https://interface.meiriyiwen.com/article/random?dev=1")
-		    .then(res => {
-		      this.datas = res.data.data;
+		  this.axios.get("https://48b7230e-6134-4bf7-a502-9b20fcda1f00.bspapp.com/http/userDocument",{params:{action: 'list'}}).then(res => {
+				console.log(res,999)
+		      this.datas = res.data.data[0];
 		    });
 			this.$nextTick(()=>{
 				if(this.$refs.box) this.$refs.box.scrollTop = 0;
